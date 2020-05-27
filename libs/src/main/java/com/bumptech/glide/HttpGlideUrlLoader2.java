@@ -50,7 +50,6 @@ public class HttpGlideUrlLoader2 implements ModelLoader<GlideUrl,InputStream>{
             }
         }
         int timeout=options.get(TIMEOUT);
-//        logLocation("noah","buildLoadData");
         return new LoadData<>(url,new HttpUrlFetcher2(url,timeout));
     }
 
@@ -72,17 +71,6 @@ public class HttpGlideUrlLoader2 implements ModelLoader<GlideUrl,InputStream>{
         public void teardown(){
             // Do nothing.
         }
-    }
-
-    public static void logLocation(String TAG,Object msg){
-        Log.println(Log.ERROR,TAG,"<<<<<<<<<<←卐卐佛祖保佑↓↓↓↓↓永无BUG卐卐→>>>>>>>>>>");
-        Log.println(Log.ERROR,TAG,String.valueOf(msg));
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        for(StackTraceElement element: stackTrace){
-            Log.println(Log.ERROR,TAG,new StringBuilder("所在类:").append(element.getClassName()).append(";所在方法:").append(
-                    element.getMethodName()).append(";所在行数").append(element.getLineNumber()).toString());
-        }
-        Log.println(Log.ERROR,TAG,"<<<<<<<<<<←卍卍佛祖保佑↑↑↑↑↑永无BUG卍卍→>>>>>>>>>>");
     }
 
 }
