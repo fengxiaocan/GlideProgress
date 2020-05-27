@@ -20,5 +20,20 @@ Glide默认使用HttpUrlConnect下载图片,通过hook下载方法来实现下�
       
   通过into无效,通过load(bitmap)无效,图片下载完成自动清理progressListener,防止内存泄漏;
   
+引用:  
+Step 1. Add the JitPack repository to your build file gradle
+
+Add it in your root build.gradle at the end of repositories:
+
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
   
-  
+Step 2. Add the dependency
+
+	dependencies {
+	        implementation 'com.github.fengxiaocan:GlideProgress:v1.0.0'
+	}
