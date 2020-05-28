@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy;
 import com.bumptech.glide.request.BaseRequestOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.util.Executors;
 
 import java.net.URL;
 
@@ -384,8 +385,13 @@ public class RequestBuilder2<TranscodeType> extends RequestBuilder<TranscodeType
         return into(new ImageTarget<TranscodeType>(imageView,pack()));
     }
 
+
     public <Y extends Target<TranscodeType>> GlideTarget<Y,TranscodeType> attach(Y target){
         return into(new GlideTarget<Y,TranscodeType>(target,pack()));
+    }
+    
+    public <Y extends Target<TranscodeType>> GlideTarget<Y,TranscodeType> attachAsync(Y target){
+        return into(new GlideTarget<Y,TranscodeType>(target,pack()),null,Executors.directExecutor());
     }
 
     /**
