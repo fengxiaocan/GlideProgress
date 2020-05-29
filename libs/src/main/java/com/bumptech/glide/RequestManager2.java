@@ -13,6 +13,7 @@ import com.bumptech.glide.manager.Lifecycle;
 import com.bumptech.glide.manager.RequestManagerTreeNode;
 import com.bumptech.glide.manager.RequestTracker;
 
+import java.io.File;
 import java.net.URL;
 
 public class RequestManager2 extends RequestManager{
@@ -34,6 +35,12 @@ public class RequestManager2 extends RequestManager{
             Context context)
     {
         super(glide,lifecycle,treeNode,requestTracker,factory,context);
+    }
+
+    @NonNull
+    @Override
+    public RequestBuilder2<File> asFile(){
+        return (RequestBuilder2<File>)super.asFile();
     }
 
     @NonNull
