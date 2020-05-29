@@ -17,20 +17,25 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy;
 import com.bumptech.glide.request.BaseRequestOptions;
+import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.PreloadTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.util.Executors;
 
+import java.io.File;
 import java.net.URL;
 
 public class RequestBuilder2<TranscodeType> extends RequestBuilder<TranscodeType>{
     private GlideUrl glideUrl;
+    private RequestManager2 requestManager2;
     private GlideProgressPack glideProgressPack;
 
     protected RequestBuilder2(
-            @NonNull Glide glide,RequestManager requestManager,Class<TranscodeType> transcodeClass,Context context)
+            @NonNull Glide glide,RequestManager2 requestManager,Class<TranscodeType> transcodeClass,Context context)
     {
         super(glide,requestManager,transcodeClass,context);
+        this.requestManager2=requestManager;
     }
 
     protected RequestBuilder2(Class<TranscodeType> transcodeClass,RequestBuilder other){
@@ -94,7 +99,7 @@ public class RequestBuilder2<TranscodeType> extends RequestBuilder<TranscodeType
 
     @Override
     public RequestBuilder2<TranscodeType> load(@Nullable URL url){
-        glideUrl = new GlideUrl(url);
+        glideUrl=new GlideUrl(url);
         return (RequestBuilder2<TranscodeType>)super.load(url);
     }
 
@@ -378,24 +383,63 @@ public class RequestBuilder2<TranscodeType> extends RequestBuilder<TranscodeType
 
     /**
      * 附加到ImageView上
+     *
      * @param imageView
      * @return
      */
-    public ImageTarget<TranscodeType> attach(ImageView imageView){
+    public final ImageTarget<TranscodeType> attachOfProgress(ImageView imageView){
         return into(new ImageTarget<TranscodeType>(imageView,pack()));
     }
 
 
-    public <Y extends Target<TranscodeType>> GlideTarget<Y,TranscodeType> attach(Y target){
+    public final <Y extends Target<TranscodeType>> GlideTarget<Y,TranscodeType> targetOfProgress(Y target){
         return into(new GlideTarget<Y,TranscodeType>(target,pack()));
     }
-    
-    public <Y extends Target<TranscodeType>> GlideTarget<Y,TranscodeType> attachAsync(Y target){
+
+    public final <Y extends Target<TranscodeType>> GlideTarget<Y,TranscodeType> targetAsyncOfProgress(Y target){
         return into(new GlideTarget<Y,TranscodeType>(target,pack()),null,Executors.directExecutor());
+    }
+
+    public final Target<TranscodeType> preloadOfProgress(int width,int height){
+        final PreloadTarget<TranscodeType> target=PreloadTarget.obtain(requestManager2,width,height);
+        return targetOfProgress(target);
+    }
+
+    public final Target<TranscodeType> preloadOfProgress(){
+        return preloadOfProgress(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL);
+    }
+
+    public final FutureTarget<TranscodeType> submitOfProgress(int width,int height){
+        final RequestProgressTarget<TranscodeType> target=new RequestProgressTarget<>(width,height,pack());
+        return into(target,target,Executors.directExecutor());
+    }
+
+    public final FutureTarget<TranscodeType> submitOfProgress(){
+        return submitOfProgress(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL);
+    }
+
+    public final <Y extends Target<File>> GlideTarget<Y,File> downloadOfProgress(@NonNull Y target){
+        return getDownloadOnlyRequest().targetOfProgress(target);
+    }
+
+    public final FutureTarget<File> downloadOfProgress(int width,int height){
+        return getDownloadOnlyRequest().submitOfProgress(width,height);
+    }
+
+    public final FutureTarget<File> downloadOfProgress(){
+        return downloadOfProgress(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL);
+    }
+
+    @NonNull
+    @Override
+    protected RequestBuilder2<File> getDownloadOnlyRequest(){
+//        return super.getDownloadOnlyRequest();
+        return new RequestBuilder2<>(File.class,this).apply(DOWNLOAD_ONLY_OPTIONS);
     }
 
     /**
      * 添加进度监听到列表中
+     *
      * @return
      */
     private String pack(){

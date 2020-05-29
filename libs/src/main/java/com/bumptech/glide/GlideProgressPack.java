@@ -16,7 +16,6 @@ class GlideProgressPack implements OnGlideProgressListener{
     }
 
     public synchronized void onProgress(final long totalLength,final long sofarLength){
-
         if(totalLength>0&&System.currentTimeMillis()-lastTime >= progressInterval){
             float v=sofarLength*1F/totalLength;
             onProgress(sofarLength*1F/totalLength);

@@ -1,11 +1,13 @@
 package com.bumptech.glide;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.manager.ConnectivityMonitorFactory;
 import com.bumptech.glide.manager.Lifecycle;
 import com.bumptech.glide.manager.RequestManagerTreeNode;
@@ -32,6 +34,24 @@ public class RequestManager2 extends RequestManager{
             Context context)
     {
         super(glide,lifecycle,treeNode,requestTracker,factory,context);
+    }
+
+    @NonNull
+    @Override
+    public RequestBuilder2<Bitmap> asBitmap(){
+        return (RequestBuilder2<Bitmap>)super.asBitmap();
+    }
+
+    @NonNull
+    @Override
+    public RequestBuilder2<GifDrawable> asGif(){
+        return (RequestBuilder2<GifDrawable>)super.asGif();
+    }
+
+    @NonNull
+    @Override
+    public RequestBuilder2<Drawable> asDrawable(){
+        return (RequestBuilder2<Drawable>)super.asDrawable();
     }
 
     @NonNull
