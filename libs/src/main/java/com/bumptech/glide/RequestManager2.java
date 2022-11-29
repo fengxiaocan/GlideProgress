@@ -16,14 +16,13 @@ import com.bumptech.glide.manager.RequestTracker;
 import java.io.File;
 import java.net.URL;
 
-public class RequestManager2 extends RequestManager{
+public class RequestManager2 extends RequestManager {
     public RequestManager2(
             @NonNull Glide glide,
             @NonNull Lifecycle lifecycle,
             @NonNull RequestManagerTreeNode treeNode,
-            @NonNull Context context)
-    {
-        super(glide,lifecycle,treeNode,context);
+            @NonNull Context context) {
+        super(glide, lifecycle, treeNode, context);
     }
 
     public RequestManager2(
@@ -32,50 +31,49 @@ public class RequestManager2 extends RequestManager{
             RequestManagerTreeNode treeNode,
             RequestTracker requestTracker,
             ConnectivityMonitorFactory factory,
-            Context context)
-    {
-        super(glide,lifecycle,treeNode,requestTracker,factory,context);
+            Context context) {
+        super(glide, lifecycle, treeNode, requestTracker, factory, context);
     }
 
     @NonNull
     @Override
-    public RequestBuilder2<File> asFile(){
-        return (RequestBuilder2<File>)super.asFile();
+    public RequestBuilder2<File> asFile() {
+        return (RequestBuilder2<File>) super.asFile();
     }
 
     @NonNull
     @Override
-    public RequestBuilder2<Bitmap> asBitmap(){
-        return (RequestBuilder2<Bitmap>)super.asBitmap();
+    public RequestBuilder2<Bitmap> asBitmap() {
+        return (RequestBuilder2<Bitmap>) super.asBitmap();
     }
 
     @NonNull
     @Override
-    public RequestBuilder2<GifDrawable> asGif(){
-        return (RequestBuilder2<GifDrawable>)super.asGif();
+    public RequestBuilder2<GifDrawable> asGif() {
+        return (RequestBuilder2<GifDrawable>) super.asGif();
     }
 
     @NonNull
     @Override
-    public RequestBuilder2<Drawable> asDrawable(){
-        return (RequestBuilder2<Drawable>)super.asDrawable();
+    public RequestBuilder2<Drawable> asDrawable() {
+        return (RequestBuilder2<Drawable>) super.asDrawable();
     }
 
     @NonNull
     @Override
-    public <ResourceType> RequestBuilder2<ResourceType> as(@NonNull Class<ResourceType> resourceClass){
-        return new RequestBuilder2<ResourceType>(glide,this,resourceClass,context);
+    public <ResourceType> RequestBuilder2<ResourceType> as(@NonNull Class<ResourceType> resourceClass) {
+        return new RequestBuilder2<>(glide, this, resourceClass, context);
     }
 
     @NonNull
     @Override
-    public RequestBuilder2<Drawable> load(@Nullable String string){
-        return (RequestBuilder2<Drawable>)super.load(string);
+    public RequestBuilder2<Drawable> load(@Nullable String string) {
+        return (RequestBuilder2<Drawable>) super.load(string);
     }
 
     @Override
-    public RequestBuilder2<Drawable> load(@Nullable URL url){
-        return (RequestBuilder2<Drawable>)super.load(url);
+    public RequestBuilder2<Drawable> load(@Nullable URL url) {
+        return (RequestBuilder2<Drawable>) super.load(url);
     }
 
 }
