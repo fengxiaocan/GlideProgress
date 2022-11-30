@@ -49,7 +49,6 @@ public class RequestBuilder2<TranscodeType> extends RequestBuilder<TranscodeType
     @Override
     public RequestBuilder2<TranscodeType> load(@Nullable String string) {
         glideUrl = new GlideUrl(string);
-        Log.e("noah", glideUrl.toStringUrl());
         return (RequestBuilder2<TranscodeType>) super.load(string);
     }
 
@@ -445,10 +444,6 @@ public class RequestBuilder2<TranscodeType> extends RequestBuilder<TranscodeType
      * @return
      */
     private String pack() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        for (StackTraceElement element : stackTrace) {
-            Log.e("noah1", element.getClassName()+":"+ element.getMethodName());
-        }
         if (glideUrl != null && glideProgressPack != null) {
             String glideTag = glideUrl.toStringUrl();
             GlidePack.addListener(glideTag, glideProgressPack);
